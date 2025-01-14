@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\DataGISModels;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DataGISControllers extends Controller
 {
@@ -39,7 +40,7 @@ class DataGISControllers extends Controller
             'materi' => $request->input('materi'),
             'keterangan' => $keteranganList,
         ]);
-
+        Alert::success('Berhasil!', 'Data GIS berhasil ditambahkan!');
         return redirect()->route('datagis.index');
     }
 
@@ -56,6 +57,7 @@ class DataGISControllers extends Controller
     {
         $users = DataGISModels::where('id', $id_bencana);
         $users->delete();
+        Alert::success('Berhasil!', 'Data GIS berhasil dihapus!');
         return redirect(route('datagis.index'));
     }
 }

@@ -27,26 +27,17 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('auth') }}" method="post" class="needs-validation" novalidate>
-                        @csrf
-                        <div class="mb-2 position-relative">
-                            <input type="text" class="form-control ps-5" id="search" placeholder="Search..." required>
-                            <!-- Ikon pencarian -->
-                            <span class="position-absolute" style="top: 50%; left: 15px; transform: translateY(-50%);">
-                                <span class="mdi mdi-search-web mdi-24px"></span>
-                            </span>
-                        </div>
-                    </form>
-                    <div class="card bg-light">
-                        <div class="row ms-1 me-1 mt-2">
-                            <button class="btn btn-sm btn-primary mb-2 d-flex align-items-start">Kantor 1</button>
-                            <button class="btn btn-sm btn-primary mb-2 d-flex align-items-start">Kantor 2</button>
-                            <button class="btn btn-sm btn-primary mb-2 d-flex align-items-start">Kantor 3</button>
-                        </div>
-
+                    <div class="mb-2 position-relative">
+                        <input type="text" class="form-control ps-5" id="search" placeholder="Search..." required>
+                        <!-- Ikon pencarian -->
+                        <span class="position-absolute" style="top: 50%; left: 15px; transform: translateY(-50%);">
+                            <span class="mdi mdi-search-web mdi-24px"></span>
+                        </span>
                     </div>
 
-
+                    <div id="searchResults" class="card bg-light">
+                        <!-- Hasil pencarian akan muncul di sini -->
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -248,5 +239,117 @@
             .catch(error => {
                 console.error('Gagal mengambil data dari API:', error);
             });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#search').on('input', function() {
+                var query = $(this).val();
+
+                // Cek jika input kosong, maka tidak melakukan pencarian
+                if (query.length > 0) {
+                    $.ajax({
+                        url: "{{ route('search') }}",
+                        method: "GET",
+                        data: {
+                            query: query,
+                        },
+                        success: function(data) {
+                            // Kosongkan hasil pencarian sebelumnya
+                            $('#searchResults').html('');
+
+                            // Jika ada hasil pencarian
+                            if (data.length > 0) {
+                                data.forEach(function(item) {
+                                    // Tampilkan kecamatan dan kelurahan
+                                    var button = $(
+                                        `<button class="btn btn-sm btn-primary mb-2 d-flex align-items-start">
+                                    ${item.kecamatan} - ${item.kelurahan}
+                                </button>`
+                                    );
+
+                                    // Tambahkan event click ke tombol
+                                    button.on('click', function() {
+                                        const modalTableBody = document
+                                            .getElementById('modalTableBody');
+                                        modalTableBody.innerHTML = '';
+                                        const konversiTanggal =
+                                            parseDateWithDay(item.tanggal);
+                                        const konversiWaktu = parseTime(item
+                                            .waktu);
+                                        const rows = [
+                                            ['Tanggal', konversiTanggal],
+                                            ['Waktu', konversiWaktu],
+                                            ['Kecamatan', item.kecamatan ||
+                                                'null'
+                                            ],
+                                            ['Kelurahan', item.kelurahan ||
+                                                'null'
+                                            ],
+                                            ['Kepala Keluarga', item
+                                                .kepala_keluarga || 'null'
+                                            ],
+                                            ['Jiwa', item.jiwa || 'null'],
+                                            ['Kerugian Materi', item
+                                                .materi || 'null'
+                                            ],
+                                            ['Keterangan', item
+                                                .keterangan || 'null'
+                                            ],
+                                        ];
+
+                                        rows.forEach(([label, value]) => {
+                                            const row = document
+                                                .createElement('tr');
+                                            const cell1 = document
+                                                .createElement('td');
+                                            const cell2 = document
+                                                .createElement('td');
+                                            cell1.textContent = label;
+                                            if (label ===
+                                                'Keterangan' &&
+                                                value !== 'N/A') {
+                                                cell2.innerHTML = value;
+                                            } else {
+                                                cell2.textContent =
+                                                    value;
+                                            }
+                                            row.appendChild(cell1);
+                                            row.appendChild(cell2);
+                                            modalTableBody.appendChild(
+                                                row);
+                                        });
+
+                                        // Tampilkan modal detail
+                                        new bootstrap.Modal(document
+                                            .getElementById('locationModal')
+                                        ).show();
+
+                                        // Tutup modal pencarian
+                                        const searchModal = document
+                                            .getElementById('modalSearch');
+                                        if (searchModal) {
+                                            const bootstrapModal = bootstrap
+                                                .Modal.getInstance(modalSearch);
+                                            if (bootstrapModal) {
+                                                bootstrapModal.hide();
+                                            }
+                                        }
+                                    });
+
+                                    $('#searchResults').append(button);
+                                });
+                            } else {
+                                // Jika tidak ada hasil, tampilkan pesan
+                                $('#searchResults').html('<p>No results found.</p>');
+                            }
+                        },
+                    });
+                } else {
+                    // Jika input kosong, kosongkan hasil pencarian
+                    $('#searchResults').html('');
+                }
+            });
+        });
     </script>
 @endsection

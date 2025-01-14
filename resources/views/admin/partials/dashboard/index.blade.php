@@ -5,41 +5,92 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                    <h4 class="page-title mb-0 font-size-18">Semua Admin</h4>
+                    <h4 class="page-title mb-0 font-size-18">Dashboard</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item">Semua Admin</li>
+                            <li class="breadcrumb-item">Dashboard</li>
                         </ol>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="d-flex align-items-end justify-content-end mb-4">
-            <a href="/admin/all-admin/create " class="btn btn-primary btn-sm waves-effect btn-label waves-light"><i
-                    class="fas fa-plus-circle label-icon"></i> Admin</a>
-        </div>
-        <div class="table-responsive mb-4">
-            <table class="table align-middle datatable dt-responsive table-check nowrap"
-                style="border-collapse: collapse; border-spacing: 0 8px; width: 100%;">
-                <thead>
-                    <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Nama</th>
-                        <th scope="col">E-Mail</th>
-                        <th scope="col">No. Handphone</th>
-                        <th style="width: 80px; min-width: 80px;">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                    </tr>
-                </tbody>
-            </table>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="barChart" style="width: 100%; max-width: 1000px;"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('barChart').getContext('2d');
+
+            // Fetch data dari API
+            fetch('{{ url('admin/data') }}')
+                .then(response => response.json())
+                .then(data => {
+                    // Menyusun data kecamatan dan tahun
+                    const labels = [];
+                    const datasets = [{
+                        label: 'Total per Kecamatan',
+                        data: []
+                    }];
+                    const infoPerKecamatan = []; // Array untuk menyimpan informasi tahun dan total
+
+                    // Menyusun data per kecamatan dan tahun
+                    data.forEach(item => {
+                        labels.push(item.kecamatan);
+                        let totalPerKecamatan = 0;
+
+                        // Mengumpulkan total data untuk setiap kecamatan
+                        item.data.forEach(yearData => {
+                            totalPerKecamatan += yearData.total;
+
+                            // Menyimpan informasi tahun dan totalnya
+                            infoPerKecamatan.push(`${yearData.tahun}: ${yearData.total}`);
+                        });
+
+                        datasets[0].data.push(totalPerKecamatan);
+                    });
+
+                    // Membuat diagram batang
+                    const barChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: datasets
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            },
+                            plugins: {
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(tooltipItem) {
+                                            // Menampilkan informasi tahun dan total saat hover pada batang
+                                            const kecamatan = tooltipItem.label;
+                                            const index = labels.indexOf(kecamatan);
+                                            const info = infoPerKecamatan.slice(index * 2, (index +
+                                                1) * 2);
+                                            return `${kecamatan}: ${info.join(', ')}`;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        });
+    </script>
 @endsection

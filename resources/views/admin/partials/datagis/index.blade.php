@@ -117,7 +117,7 @@
                                         </div>
                                     </div>
                                     <a href="" class="btn btn-sm btn-warning">Update</a>
-                                    <a href="{{ route('users.delete', $item->id) }}"
+                                    <a href="{{ route('datagis.delete', $item->id) }}"
                                         class="btn btn-sm btn-danger">Delete</a>
                                 </div>
                             </td>

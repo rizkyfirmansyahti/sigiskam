@@ -18,7 +18,7 @@
 </head>
 
 <body style="background-color: #f8f8fb">
-    {{-- @include('sweetalert::alert') --}}
+    @include('sweetalert::alert')
 
     <div id="layout-wrapper">
         {{-- HEADER --}}

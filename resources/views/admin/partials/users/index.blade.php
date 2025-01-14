@@ -15,8 +15,26 @@
             </div>
         </div>
         <div class="d-flex align-items-end justify-content-end mb-4">
-            <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm waves-effect btn-label waves-light"><i
-                    class="fas fa-plus-circle label-icon"></i> Users</a>
+            @if ($totalUsers < 2)
+                <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm waves-effect btn-label waves-light">
+                    <i class="fas fa-plus-circle label-icon"></i> Users
+                </a>
+            @else
+                <button class="btn btn-primary btn-sm waves-effect btn-label waves-light" onclick="showLimitAlert()">
+                    <i class="fas fa-plus-circle label-icon"></i> Users
+                </button>
+            @endif
+
+            <script>
+                function showLimitAlert() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'User sudah 2',
+                        text: 'Tidak dapat menambahkan lebih dari 2 pengguna!',
+                    });
+                }
+            </script>
+
         </div>
         <div class="table-responsive mb-4">
             <table class="table align-middle datatable dt-responsive table-check nowrap"
@@ -47,8 +65,27 @@
                             <td>
                                 <div class="btn-group">
                                     <a href="" class="btn btn-sm btn-warning">Update</a>
-                                    <a href="{{ route('users.delete', $item->id) }}"
-                                        class="btn btn-sm btn-danger">Delete</a>
+                                    @if ($totalUsers > 1)
+                                        <a href="{{ route('users.delete', $item->id) }}" class="btn btn-sm btn-danger"
+                                            data-confirm-delete="true">
+                                            Delete
+                                        </a>
+                                    @else
+                                        <button class="btn btn-sm btn-danger" onclick="showCannotDeleteAlert()">
+                                            Delete
+                                        </button>
+                                    @endif
+
+                                    <script>
+                                        function showCannotDeleteAlert() {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Tidak dapat dihapus',
+                                                text: 'User tidak dapat dihapus karena hanya ada satu pengguna!',
+                                            });
+                                        }
+                                    </script>
+
                                 </div>
                             </td>
                         </tr>

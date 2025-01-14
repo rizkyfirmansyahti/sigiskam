@@ -60,9 +60,6 @@
                     </span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
-                    <a class="dropdown-item" href="/admin/profile"><i
-                            class="fas fa-user font-size-16 align-middle me-1"></i> Profil</a>
-                    <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="{{ route('admin.logout') }}"><i
                             class="mdi mdi-logout font-size-16 align-middle me-1 text-danger"></i> Keluar</a>
                 </div>

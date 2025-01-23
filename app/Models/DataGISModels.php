@@ -11,16 +11,23 @@ class DataGISModels extends Model
 
     protected $primaryKey = 'id';
     protected $table = 'datagis';
-    protected $fillable = [
-        'tanggal',
-        'waktu',
-        'kecamatan',
-        'kelurahan',
-        'latitude',
-        'longitude',
-        'kepala_keluarga',
-        'jiwa',
-        'materi',
-        'keterangan',
-    ];
+    protected $guarded=[];
+    // protected $fillable = [
+    //     'tanggal',
+    //     'waktu',
+    //     'kecamatan',
+    //     'kelurahan',
+    //     'latitude',
+    //     'longitude',
+    //     'kepala_keluarga',
+    //     'jiwa',
+    //     'materi',
+    //     'keterangan',
+    // ];
+    // protected $attributes = [
+    //     'waktu',
+    //     'kecamatan',
+    //     'kepala_keluarga',
+    //     'jiwa',
+    // ];
 }

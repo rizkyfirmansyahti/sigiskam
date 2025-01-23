@@ -1,6 +1,7 @@
 @extends('users.layouts.index')
 @section('title', 'Beranda - SIGISKAM')
 @section('content')
+
     {{-- HEADER --}}
     <nav class="navbar navbar-expand-lg " style="background: linear-gradient(to right, #d9241c, #fe7000);">
         <div class="container-fluid">
@@ -117,11 +118,59 @@
             </div>
         </div>
     </div>
-
-    <footer class="d-flex justify-content-center align-items-center pt-2 pb-2"
-        style="background: linear-gradient(to right, #d9241c, #fe7000); color: white; font-weight: bold">
-        <span>&copy; 2024 Fadillah Utami</span>
-    </footer>
+    <footer class="footer-10000">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="footer-about">
+                    <h3>BPBD</h3>
+                    <span>
+                      BPBD adalah Badan Penanggulangan Bencana Daerah yang merupakan lembaga 
+                      pemerintah non-departemen yang melaksanakan tugas penanggulangan 
+                      bencana di daerah baik Provinsi maupun Kabupaten/Kota 
+                      dengan berpedoman pada kebijakan yang ditetapkan 
+                      oleh Badan Nasional Penanggulangan Bencana.
+                    </span>
+                </div>
+                <div class="footer-left">
+                
+                  <div class="footer-media">
+                    <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/bpbd_kampar?igsh=eWllcnpmcTByZ2E=" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://whatsapp.com" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                  </div>
+                  <div class="footer-center">
+                    <h3>Butuh Bantuan?</h3>
+                    <div>
+                      <i class="fa fa-map-marker"></i>
+                      <p>Langgini Kec. Bangkinang, Kab. Kampar, Riau</p>
+                    </div>
+                    <div>
+                      <i class="fa fa-phone"></i>
+                      <p>+62 812-6644-1109</p>
+                    </div>
+                    <div>
+                      <i class="fa fa-envelope"></i>
+                      <p><a href="mailto:pusdalopspbkampar@gmail.com">pusdalopspbkampar@gmail.com</a></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row align-items-center">
+              <div class="col-md-4">
+                <ul class="list-unstyled social mb-0 pb-0 nav-left"></ul>
+              </div>
+              <div class="col-md-4 text-center">
+                <span class="small">2025 &copy; Fadilah Utami.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
 
     {{-- SCRIPT --}}
     <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@2.4.0/Control.FullScreen.min.js"></script>

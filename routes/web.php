@@ -35,6 +35,8 @@ Route::prefix('admin')->middleware('check.users')->group(function () {
     // Data GIS
     Route::get('/data-gis', [DataGISControllers::class, 'index'])->name('datagis.index');
     Route::get('/data-gis/create', [DataGISControllers::class, 'create'])->name('datagis.create');
+    Route::get('/data-gis//edit/{id}', [DataGISControllers::class, 'update'])->name('datagis.update');
+    Route::post('/data-gis/update/{id}', [DataGISControllers::class, 'update'])->name('datagis.update');
     Route::post('/data-gis/store', [DataGISControllers::class, 'store'])->name('datagis.store');
     Route::get('/data-gis/delete/{id_bencana}', [DataGISControllers::class, 'delete'])->name('datagis.delete');
 

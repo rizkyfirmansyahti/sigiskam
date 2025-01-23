@@ -16,13 +16,13 @@ class CreateDataGisTable extends Migration
         Schema::create('datagis', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->time('waktu');
+            $table->time('waktu')->nullable();
             $table->string('kecamatan');
             $table->string('kelurahan');
             $table->string('latitude');
             $table->string('longitude');
-            $table->string('kepala_keluarga');
-            $table->integer('jiwa');
+            $table->string('kepala_keluarga')->nullable();
+            $table->integer('jiwa')->nullable();
             $table->string('materi')->nullable();
             $table->string('keterangan', 1000)->nullable();
             $table->timestamps();

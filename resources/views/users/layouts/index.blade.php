@@ -12,6 +12,7 @@
     <link href="/images/logo_kampar.png" rel="icon">
     {{-- VENDOR STYLE --}}
     @include('users.layouts.vendor-css')
+    
 </head>
 
 <body>

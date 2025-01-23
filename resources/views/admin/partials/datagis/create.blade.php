@@ -29,10 +29,7 @@
 
                 <div class="mb-2">
                     <label for="waktu" class="form-label">Waktu</label>
-                    <input type="time" class="form-control" id="waktu" name="waktu" required>
-                    <div class="invalid-feedback">
-                        Silahkan masukkan waktu!
-                    </div>
+                    <input type="time" class="form-control" id="waktu" name="waktu">
                 </div>
 
                 <div class="row">
@@ -83,19 +80,13 @@
                     <div class="col-md-6">
                         <div class="mb-2">
                             <label for="kepala_keluarga" class="form-label">Kepala Keluarga</label>
-                            <input type="text" class="form-control" id="kepala_keluarga" name="kepala_keluarga" required>
-                            <div class="invalid-feedback">
-                                Silahkan masukkan kepala keluarga!
-                            </div>
+                            <input type="text" class="form-control" id="kepala_keluarga" name="kepala_keluarga">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-2">
                             <label for="jiwa" class="form-label">Jiwa</label>
-                            <input type="text" class="form-control" id="jiwa" name="jiwa" required>
-                            <div class="invalid-feedback">
-                                Silahkan masukkan jumlah jiwa!
-                            </div>
+                            <input type="text" class="form-control" id="jiwa" name="jiwa">
                         </div>
                     </div>
                 </div>

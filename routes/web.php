@@ -8,10 +8,14 @@ use App\Http\Controllers\Users\DataBencanaControllers;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    // View Beranda
+    // View Home
     Route::get('/', function () {
         return view('users.partials.index');
     })->name('beranda');
+    // View Maps
+    Route::get('/maps', function () {
+        return view('users.partials.maps');
+    })->name('maps');
     // Authent Login
     Route::post('/auth', [AuthControllers::class, 'auth'])->name('auth');
     // API Bencana

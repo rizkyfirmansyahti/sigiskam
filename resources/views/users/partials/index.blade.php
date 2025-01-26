@@ -69,15 +69,15 @@
                     <p class="fs-4 fw-bold">Butuh Bantuan?</p>
                         <div>
                         <i class="fa fa-map-marker"></i>
-                        <span>Langgini Kec. Bangkinang, Kab. Kampar, Riau</span>
+                        <span style="margin-left: 10px"><a href="https://maps.app.goo.gl/ZFYh18mK185a3GNz7">Langgini Kec. Bangkinang, Kab. Kampar, Riau</a></span>
                         </div>
                         <div>
                         <i class="fa fa-phone"></i>
-                        <span>+62 812-6644-1109</span>
+                        <span style="margin-left: 10px"><a href="wa.me/6281266441109">+62 812-6644-1109</a></span>
                         </div>
                         <div>
                         <i class="fa fa-envelope"></i>
-                        <span><a href="mailto:pusdalopspbkampar@gmail.com">pusdalopspbkampar@gmail.com</a></span>
+                        <span style="margin-left: 10px"><a href="mailto:pusdalopspbkampar@gmail.com">pusdalopspbkampar@gmail.com</a></span>
                         </div>
                 </div>
             </div>

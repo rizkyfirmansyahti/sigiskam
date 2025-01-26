@@ -15,7 +15,61 @@
             </div>
         </div>
 
-        <div class="row">
+        <p class="d-inline-flex gap-1">
+            <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#maps"
+                aria-expanded="true" aria-controls="maps">
+                Maps
+            </button>
+            <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#chart"
+                aria-expanded="false" aria-controls="chart">
+                Chart
+            </button>
+        </p>
+        {{-- Chart --}}
+        <div class="accordion">
+            <div class="collapse" id="chart" data-bs-parent=".accordion">
+                <div class="card card-body">
+                    <canvas id="barChart" style="width: 100%; max-width: 1000px;"></canvas>
+                </div>
+            </div>
+            {{-- Maps --}}
+            <div class="collapse show" id="maps" data-bs-parent=".accordion">
+                <div class="card card-body">
+                    <div id="map" style="height: 550px" class="ml-6"></div>
+                </div>
+            </div>
+            {{-- MODAL INFORMASI BENCANA --}}
+            <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="locationModalLabel">Informasi Lokasi Bencana</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="modalContent">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Informasi</th>
+                                        <th scope="col">Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="modalTableBody">
+                                    <!-- Tampilkan Data -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        {{-- <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
@@ -23,7 +77,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -93,4 +147,5 @@
                 .catch(error => console.error('Error fetching data:', error));
         });
     </script>
+
 @endsection

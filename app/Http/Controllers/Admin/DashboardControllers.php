@@ -49,4 +49,10 @@ class DashboardControllers extends Controller
 
         return response()->json($formattedData);
     }
+
+    function maps()
+    {
+        $data = DataGISModels::all();
+        return response()->json($data);
+    }
 }

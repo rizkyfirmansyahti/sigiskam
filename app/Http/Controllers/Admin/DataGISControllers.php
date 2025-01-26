@@ -48,16 +48,9 @@ class DataGISControllers extends Controller
         $data = DataGISModels::findOrFail($id);
         return view('admin.partials.datagis.show', compact('data'));
     }
-    public function edit($id)
-    {
-        $data = DataGISModels::findOrFail($id);
-        return view('admin.partials.datagis.edit', compact('data'));
-    }
 
     public function update(Request $request, $id)
     {
-        $data = DataGISModels::findOrFail($id);
-
         $keterangan = $request->input('keterangan');
         $keteranganList = '<ul style="list-style-type: none; padding-left: 0">';
         foreach (explode("\n", $keterangan) as $line) {
@@ -66,20 +59,18 @@ class DataGISControllers extends Controller
             }
         }
         $keteranganList .= '</ul>';
-
-        $request->validate([
-            'tanggal' => 'required|date',
-            'waktu' => 'required',
-            'kecamatan' => 'required|string',
-            'kelurahan' => 'required|string',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-            'kepala_keluarga' => 'required|string',
-            'jiwa' => 'required|integer',
-            'materi' => 'required|string',
-            'keterangan' => 'required|string',
+        DataGISModels::where('id', $id)->update([
+            'tanggal' => $request->input('tanggal'),
+            'waktu' => $request->input('waktu'),
+            'kecamatan' => $request->input('kecamatan'),
+            'kelurahan' => $request->input('kelurahan'),
+            'latitude' => $request->input('latitude'),
+            'longitude' => $request->input('longitude'),
+            'kepala_keluarga' => $request->input('kepala_keluarga'),
+            'jiwa' => $request->input('jiwa'),
+            'materi' => $request->input('materi'),
+            'keterangan' => $keteranganList,
         ]);
-
         Alert::success('Berhasil!', 'Data GIS berhasil diperbarui!');
         return redirect()->route('datagis.index');
     }

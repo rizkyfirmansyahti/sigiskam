@@ -119,11 +119,12 @@
             </div>
         </div>
     </div>
+    
     <footer class="mt-2 mb-2">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h3 class="">BPBD - Badan Penanggulangan Bencana Daerah</h3>
+                    <p class="fs-4 fw-bold">BPBD - Badan Penanggulangan Bencana Daerah</p>
                     <span>
                     BPBD adalah Badan Penanggulangan Bencana Daerah yang merupakan lembaga 
                     pemerintah non-departemen yang melaksanakan tugas penanggulangan 
@@ -142,7 +143,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <h3>Butuh Bantuan?</h3>
+                    <p class="fs-4 fw-bold">Butuh Bantuan?</p>
                         <div>
                         <i class="fa fa-map-marker"></i>
                         <span>Langgini Kec. Bangkinang, Kab. Kampar, Riau</span>

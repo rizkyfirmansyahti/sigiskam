@@ -33,13 +33,29 @@ class UsersControllers extends Controller
         Alert::success('Berhasil!', 'Users berhasil ditambahkan!');
         return redirect(route('users.index'));
     }
-    function show()
+    function show(Request $request, $id_users)
     {
-
+        $data = User::findOrFail($id_users);
+        return view('admin.partials.users.show', compact('data'));
     }
-    function edit()
+    function update(Request $request, $id_users)
     {
-
+        if ($request->input('password' == null)) {
+            User::where('id', $id_users)->update([
+                'name' => $request->input('name'),
+                'username' => $request->input('username')
+            ]);
+            Alert::success('Berhasil!', 'Users berhasil diubah!');
+            return redirect(route('users.index'));
+        } else {
+            User::where('id', $id_users)->update([
+                'name' => $request->input('name'),
+                'username' => $request->input('username'),
+                'password' => bcrypt($request->input('password'))
+            ]);
+            Alert::success('Berhasil!', 'Users berhasil diubah!');
+            return redirect(route('users.index'));
+        }
     }
     function delete($id_users)
     {

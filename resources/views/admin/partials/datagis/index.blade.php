@@ -80,32 +80,32 @@
                                                         </tr>
                                                         <tr>
                                                             <td>Waktu</td>
-                                                            <td>{{ \Carbon\Carbon::parse($item->waktu)->format('H:i') }}
+                                                            <td>{{ $item->waktu ? \Carbon\Carbon::parse($item->waktu)->format('H:i') : '-' }}
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Kecamatan</td>
-                                                            <td>{{ $item->kecamatan }}</td>
+                                                            <td>{{ $item->kecamatan ?? '-' }}</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Kelurahan</td>
-                                                            <td>{{ $item->kelurahan }}</td>
+                                                            <td>{{ $item->kelurahan ?? '-' }}</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Kepala Keluarga</td>
-                                                            <td>{{ $item->kepala_keluarga }}</td>
+                                                            <td>{{ $item->kepala_keluarga ?? '-' }}</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Jiwa</td>
-                                                            <td>{{ $item->jiwa }}</td>
+                                                            <td>{{ $item->jiwa ?? '-' }}</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Kerugian Materi</td>
-                                                            <td>{{ $item->materi }}</td>
+                                                            <td>{{ $item->materi ?? '-'}}</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Keterangan</td>
-                                                            <td>{!! $item->keterangan !!}</td>
+                                                            <td>{!! $item->keterangan ?? '-' !!}</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -116,7 +116,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="" class="btn btn-sm btn-warning">Update</a>
+                                    <a href="{{route('datagis.show',$item->id)}}" class="btn btn-sm btn-warning">Update</a>
                                     <a href="{{ route('datagis.delete', $item->id) }}"
                                         class="btn btn-sm btn-danger">Delete</a>
                                 </div>

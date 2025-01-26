@@ -1,6 +1,11 @@
 @extends('users.layouts.index')
 @section('title', 'Beranda - SIGISKAM')
 @section('content')
+<style>
+    .text-justify{
+        text-align: justify;
+    }
+</style>
 
     {{-- HEADER --}}
     <nav class="navbar navbar-expand-lg " style="background: linear-gradient(to right, #d9241c, #fe7000);">
@@ -17,15 +22,32 @@
             data-bs-target="#modalLogin">Login</button>
     </div>
 
-    <div class="container">
-        <h1>ISI KONTEN NYA SINI YA !!!</h1>
+    <div class="container mt-2">
+        <div>
+            <h1>Sejarah Berdirinya BPBD Kabupaten Kampar</h1>
+            <p class="text-justify">Dengan ditetapkan Peraturan Daerah (PERDA) maka penanggulangan bencana diharapkan akan semakin baik, pola penanggulangan bencana mendapatkan dimensi baru setelah dikeluarkannya Undang-Undang Nomor 24 Tahun 2007 Tentang Penanggulangan Bencana, Peraturan Kepala Badan Nasional Penanggulangan Bencana (PERKA BNPB) Nomor 3 Tahun 2008 Tentang Pedoman Pembentukan Badan Penanggulangan Bencana Daerah.</p>
+            <p class="text-justify">Sejarah Lembaga Badan Penanggulangan Bencana Daerah (BPBD) terbentuk tidak terlepas dari perkembangan penanggulangan bencana pada masa kemerdekaan hingga bencana alam berupa gempa bumi dahsyat di Samudera Hindia pada abad 20. Sementara itu, perkembangan tersebut sangat dipengaruhi pada konteks situasi, cakupan dan paradigma penanggulangan bencana.</p>
+            <p class="text-justify">Melihat kenyataan saat ini, berbagai bencana yang dilatarbelakangi kondisi geografis, geologis, hidrologis, dan demografis mendorong Kabupaten Kampar untuk membangun visi untuk membangun ketangguhan dalam menghadapi bencana.</p>
+            <h1>Wilayah Kabupaten Kampar</h1>
+            <p class="text-justify">Letak geografis dan topografi yang potensial terhadap terjadinya bencana alam dan luasnya cakupan wilayah penanganan penanggulangan kebencanaan dengan jenis potensi bencana yang beragam terdapat 8 (delapan) jenis bencana di wilayah Kabupaten Kampar, yaitu banjir, kebakaran hutan dan lahan, tanah longsor/gerakan tanah, kekeringan, epidemi dan wabah penyakit, konflik sosial, kegagalan teknologi dan angin puting beliung;</p>
+            <p class="text-justify">Terjadinya anomaly cuaca sebagai dampak dari pemanasan global (global warning);</p>
+            <p class="text-justify">Penanggulangan bencana merupakan urusan bersama antara pemerintah, masyarakat dan dunia usaha, namun dalam kenyataannya perhatian masyarakat</p>
+            <h1>Penanggulangan Bencana</h1>
+            <p class="text-justify">Menghadapi ancaman bencana tersebut, Pemerintah Indonesia berperan penting dalam membangun sistem penanggulangan bencana di tanah air. Pembentukan lembaga merupakan salah satu bagian dari sistem yang telah berproses dari waktu ke waktu.</p>
+        </div>
+        <div>
+            <h1>Struktur Organisasi BPBD Kampar</h1>
+            <div class="card">
+                <img src="/images/struktur.jpeg" alt="" class="w-100 pb-5">
+            </div>
+        </div>
     </div>
 
     <footer class="mt-2 mb-2">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h3 class="">BPBD - Badan Penanggulangan Bencana Daerah</h3>
+                    <p class="fs-4 fw-bold">BPBD - Badan Penanggulangan Bencana Daerah</p>
                     <span>
                     BPBD adalah Badan Penanggulangan Bencana Daerah yang merupakan lembaga 
                     pemerintah non-departemen yang melaksanakan tugas penanggulangan 
@@ -44,7 +66,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <h3>Butuh Bantuan?</h3>
+                    <p class="fs-4 fw-bold">Butuh Bantuan?</p>
                         <div>
                         <i class="fa fa-map-marker"></i>
                         <span>Langgini Kec. Bangkinang, Kab. Kampar, Riau</span>

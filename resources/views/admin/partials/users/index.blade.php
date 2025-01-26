@@ -1,5 +1,5 @@
 @extends('admin.layouts.index')
-@section('title', 'Dashboard - SIGISKAM')
+@section('title', 'Users - SIGISKAM')
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -64,7 +64,7 @@
                             </td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="" class="btn btn-sm btn-warning">Update</a>
+                                    <a href="{{route('users.show',$item->id)}}" class="btn btn-sm btn-warning">Update</a>
                                     @if ($totalUsers > 1)
                                         <a href="{{ route('users.delete', $item->id) }}" class="btn btn-sm btn-danger"
                                             data-confirm-delete="true">

@@ -2,6 +2,7 @@
 @section('title', 'Maps - SIGISKAM')
 @section('content')
 
+
     {{-- HEADER --}}
     <nav class="navbar navbar-expand-lg " style="background: linear-gradient(to right, #d9241c, #fe7000);">
         <div class="container-fluid">
@@ -13,8 +14,8 @@
     {{-- BUTTON MODAL LOGIN DAN SEARCH --}}
     <div class="btn-group w-100" role="group">
         <a href="{{route('beranda')}}" class="btn btn-secondary border-start-0 rounded-0">Beranda</a>
-        <button type="button" class="btn btn-success border-start-0 rounded-0" data-bs-toggle="modal"
-            data-bs-target="#modalSearch">Search</button>
+        {{-- <button type="button" class="btn btn-success border-start-0 rounded-0" data-bs-toggle="modal"
+            data-bs-target="#modalSearch">Search</button> --}}
         <button type="button" class="btn btn-primary border-end-0 rounded-0" data-bs-toggle="modal"
             data-bs-target="#modalLogin">Login</button>
     </div>
@@ -169,6 +170,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     {{-- Script Leaflet JS --}}
+    <script src="/assets/leaflet-search.js"></script>
     <script>
         // Parse DMS ke Desimal
         function dmsToDecimal(dms) {
@@ -217,71 +219,78 @@
             const [hours, minutes] = timeString.split(':');
             return `${hours}:${minutes}`;
         }
+// Inisialisasi peta
+var map = L.map('map').setView([0.34503860193591596, 101.03634547826526], 9);
 
-        // Inisialisasi peta
-        var map = L.map('map').setView([0.34503860193591596, 101.03634547826526], 9);
+// Tambahkan layer tile
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
 
-        // Tambahkan layer tile
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+// Buat layer grup untuk marker
+var markersLayer = new L.LayerGroup().addTo(map);
 
-        // Ambil data dari API
-        fetch('/data-bencana')
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(location => {
-                    // Konversi lat long
-                    const lat = isNaN(location.latitude) ? dmsToDecimal(location.latitude) : parseFloat(location
-                        .latitude);
-                    const lng = isNaN(location.longitude) ? dmsToDecimal(location.longitude) : parseFloat(
-                        location.longitude);
+// Tambahkan kontrol pencarian
+map.addControl(new L.Control.Search({
+    layer: markersLayer,
+    propertyName: 'title', // Properti yang akan dicari
+    marker: false,
+    moveToLocation: function (latlng, title, map) {
+        map.setView(latlng, 13); // Zoom ke lokasi yang dicari
+    }
+}));
 
-                    if (lat !== null && lng !== null) {
-                        // Market Di Maps
-                        const marker = L.marker([lat, lng]).addTo(map);
-                        marker.on('click', () => {
-                            const konversiTanggal = parseDateWithDay(location.tanggal);
-                            const konversiWaktu = parseTime(location.waktu);
-                            const modalTableBody = document.getElementById('modalTableBody');
-                            modalTableBody.innerHTML = '';
-                            const rows = [
-                                ['Tanggal', konversiTanggal],
-                                ['Waktu', konversiWaktu],
-                                ['Kecamatan', location.kecamatan || 'null'],
-                                ['Kelurahan', location.kelurahan || 'null'],
-                                ['Kepala Keluarga', location.kepala_keluarga || 'null'],
-                                ['Jiwa', location.jiwa || 'null'],
-                                ['Kerugian Materi', location.materi || 'null'],
-                                ['Keterangan', location.keterangan || 'null']
-                            ];
+// Ambil data dari API
+fetch('/data-bencana')
+    .then(response => response.json())
+    .then(data => {
+        data.forEach(location => {
+            // Konversi lat long
+            const lat = isNaN(location.latitude) ? dmsToDecimal(location.latitude) : parseFloat(location.latitude);
+            const lng = isNaN(location.longitude) ? dmsToDecimal(location.longitude) : parseFloat(location.longitude);
 
-                            rows.forEach(([label, value]) => {
-                                const row = document.createElement('tr');
-                                const cell1 = document.createElement('td');
-                                const cell2 = document.createElement('td');
-                                cell1.textContent = label;
-                                if (label === 'Keterangan' && value !== 'N/A') {
-                                    cell2.innerHTML =
-                                        value;
-                                } else {
-                                    cell2.textContent = value;
-                                }
-                                row.appendChild(cell1);
-                                row.appendChild(cell2);
-                                modalTableBody.appendChild(row);
-                            });
-                            new bootstrap.Modal(document.getElementById('locationModal')).show();
-                        });
-                    }
+            if (lat !== null && lng !== null) {
+                // Buat marker dan tambahkan ke markersLayer
+                const marker = L.marker([lat, lng], { title: location.kelurahan || 'Lokasi' }).addTo(markersLayer);
+                
+                marker.on('click', () => {
+                    const konversiTanggal = parseDateWithDay(location.tanggal);
+                    const konversiWaktu = parseTime(location.waktu);
+                    const modalTableBody = document.getElementById('modalTableBody');
+                    modalTableBody.innerHTML = '';
+                    const rows = [
+                        ['Tanggal', konversiTanggal],
+                        ['Waktu', konversiWaktu],
+                        ['Kecamatan', location.kecamatan || 'null'],
+                        ['Kelurahan', location.kelurahan || 'null'],
+                        ['Kepala Keluarga', location.kepala_keluarga || 'null'],
+                        ['Jiwa', location.jiwa || 'null'],
+                        ['Kerugian Materi', location.materi || 'null'],
+                        ['Keterangan', location.keterangan || 'null']
+                    ];
+
+                    rows.forEach(([label, value]) => {
+                        const row = document.createElement('tr');
+                        const cell1 = document.createElement('td');
+                        const cell2 = document.createElement('td');
+                        cell1.textContent = label;
+                        cell2.textContent = value;
+                        row.appendChild(cell1);
+                        row.appendChild(cell2);
+                        modalTableBody.appendChild(row);
+                    });
+                    new bootstrap.Modal(document.getElementById('locationModal')).show();
                 });
-            })
-            .catch(error => {
-                console.error('Gagal mengambil data dari API:', error);
-            });
+            }
+        });
+    })
+    .catch(error => {
+        console.error('Gagal mengambil data dari API:', error);
+    });
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('#search').on('input', function() {
                 var query = $(this).val();
@@ -391,5 +400,5 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 @endsection

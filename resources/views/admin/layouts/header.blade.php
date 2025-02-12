@@ -23,7 +23,7 @@
                     </span>
                     <span class="logo-lg">
                         <img src="/images/logo_kampar.png" alt="" height="30"> <span class="logo-txt"
-                            style="color: white">SIGISKAM</span>
+                            style="color: white">WEBGISKAM</span>
                     </span>
                 </a>
 

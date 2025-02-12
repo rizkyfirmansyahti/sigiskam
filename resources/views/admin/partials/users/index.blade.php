@@ -37,7 +37,7 @@
 
         </div>
         <div class="table-responsive mb-4">
-            <table class="table align-middle datatable dt-responsive table-check nowrap"
+            <table class="table align-middle  dt-responsive table-check nowrap"
                 style="border-collapse: collapse; border-spacing: 0 8px; width: 100%;">
                 <thead>
                     <tr>
@@ -65,7 +65,7 @@
                             <td>
                                 <div class="btn-group">
                                     <a href="{{route('users.show',$item->id)}}" class="btn btn-sm btn-warning">Update</a>
-                                    @if ($totalUsers > 1)
+                                    {{-- @if ($totalUsers > 1)
                                         <a href="{{ route('users.delete', $item->id) }}" class="btn btn-sm btn-danger"
                                             data-confirm-delete="true">
                                             Delete
@@ -84,7 +84,7 @@
                                                 text: 'User tidak dapat dihapus karena hanya ada satu pengguna!',
                                             });
                                         }
-                                    </script>
+                                    </script> --}}
 
                                 </div>
                             </td>

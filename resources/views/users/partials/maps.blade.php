@@ -1,5 +1,5 @@
 @extends('users.layouts.index')
-@section('title', 'Maps - SIGISKAM')
+@section('title', 'Maps - WEBGISKAM')
 @section('content')
 
 
@@ -7,7 +7,7 @@
     <nav class="navbar navbar-expand-lg " style="background: linear-gradient(to right, #d9241c, #fe7000);">
         <div class="container-fluid">
             <img src="/images/logo_kampar.png" alt="Logo Kampar" class="ms-4" width="50">
-            <h3 style="color: white">SIGISKAM</h3>
+            <h3 style="color: white">WEBGISKAM</h3>
             <img src="/images/logo_polkam.png" alt="Logo Kampar" class="me-4" width="50">
         </div>
     </nav>

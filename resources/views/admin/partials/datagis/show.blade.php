@@ -1,5 +1,5 @@
 @extends('admin.layouts.index')
-@section('title', 'Update Data GIS - SIGISKAM')
+@section('title', 'Update Data GIS - WEBGISKAM')
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -21,7 +21,8 @@
                 @csrf
                 <div class="mb-2">
                     <label for="tanggal" class="form-label">Tanggal</label>
-                    <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{$data->tanggal}}" required>
+                    <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ $data->tanggal }}" max="{{ date('Y-m-d') }}">
+
                     <div class="invalid-feedback">
                         Silahkan masukkan tanggal!
                     </div>
@@ -29,7 +30,7 @@
 
                 <div class="mb-2">
                     <label for="waktu" class="form-label">Waktu</label>
-                    <input type="time" class="form-control" id="waktu" name="waktu" value="{{ $data->waktu ? \Carbon\Carbon::parse($data->waktu)->format('H:i') : '' }}">
+                    <input type="time" class="form-control" id="waktu" name="waktu" value="{{ $data->waktu ? \Carbon\Carbon::parse($data->waktu)->format('H:i') : '' }}" >
                 </div>
 
                 <div class="row">

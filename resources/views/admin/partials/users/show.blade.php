@@ -1,5 +1,5 @@
 @extends('admin.layouts.index')
-@section('title', 'Update Users - SIGISKAM')
+@section('title', 'Update Users - WEBGISKAM')
 @section('content')
     <div class="container-fluid">
         <div class="row">

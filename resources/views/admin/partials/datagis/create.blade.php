@@ -1,5 +1,5 @@
 @extends('admin.layouts.index')
-@section('title', 'Create Data GIS - SIGISKAM')
+@section('title', 'Create Data GIS - WEBGISKAM')
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -21,7 +21,7 @@
                 @csrf
                 <div class="mb-2">
                     <label for="tanggal" class="form-label">Tanggal</label>
-                    <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+                    <input type="date" class="form-control" id="tanggal" name="tanggal" max="{{ now()->toDateString() }}" required>
                     <div class="invalid-feedback">
                         Silahkan masukkan tanggal!
                     </div>

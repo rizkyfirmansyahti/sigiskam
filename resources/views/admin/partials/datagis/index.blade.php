@@ -1,5 +1,5 @@
 @extends('admin.layouts.index')
-@section('title', 'Data GIS - SIGISKAM')
+@section('title', 'Data GIS - WEBGISKAM')
 @section('content')
     <div class="container-fluid">
         <div class="row">

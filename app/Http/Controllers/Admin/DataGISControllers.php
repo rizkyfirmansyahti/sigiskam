@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\DataGISModels;
+use App\Models\KecamatanModels;
+use App\Models\KelurahanModels;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -11,13 +13,24 @@ class DataGISControllers extends Controller
 {
     function index()
     {
-        $allData = DataGISModels::all();
+        // $allData = DataGISModels::all();
+        $allData = DataGISModels::select('datagis.*', 'kecamatan.kecamatan', 'kelurahan.kelurahan')
+            ->join('kecamatan', 'datagis.id_kecamatan', '=', 'kecamatan.id')
+            ->join('kelurahan', 'datagis.id_kelurahan', '=', 'kelurahan.id')
+            ->get();
         return view('admin.partials.datagis.index', compact('allData'));
     }
     function create()
     {
-        return view('admin.partials.datagis.create');
+        $data = KecamatanModels::with('kelurahan')->get();
+        return view('admin.partials.datagis.create', compact('data'));
     }
+    public function getKelurahan(Request $request)
+    {
+        $kelurahan = KelurahanModels::where('id_kecamatan', $request->kecamatan_id)->get();
+        return response()->json($kelurahan);
+    }
+
     public function store(Request $request)
     {
         $keterangan = $request->input('keterangan');
@@ -31,8 +44,8 @@ class DataGISControllers extends Controller
         DataGISModels::create([
             'tanggal' => $request->input('tanggal'),
             'waktu' => $request->input('waktu'),
-            'kecamatan' => $request->input('kecamatan'),
-            'kelurahan' => $request->input('kelurahan'),
+            'id_kecamatan' => $request->input('kecamatan'),
+            'id_kelurahan' => $request->input('kelurahan'),
             'latitude' => $request->input('latitude'),
             'longitude' => $request->input('longitude'),
             'kepala_keluarga' => $request->input('kepala_keluarga'),
@@ -46,7 +59,9 @@ class DataGISControllers extends Controller
     function show($id)
     {
         $data = DataGISModels::findOrFail($id);
-        return view('admin.partials.datagis.show', compact('data'));
+        $kecamatanList = KecamatanModels::all();
+        $kelurahanList = KelurahanModels::where('id_kecamatan', $data->id_kecamatan)->get();
+        return view('admin.partials.datagis.show', compact('data', 'kecamatanList', 'kelurahanList'));
     }
 
     public function update(Request $request, $id)
@@ -62,8 +77,8 @@ class DataGISControllers extends Controller
         DataGISModels::where('id', $id)->update([
             'tanggal' => $request->input('tanggal'),
             'waktu' => $request->input('waktu'),
-            'kecamatan' => $request->input('kecamatan'),
-            'kelurahan' => $request->input('kelurahan'),
+            'id_kecamatan' => $request->input('kecamatan'),
+            'id_kelurahan' => $request->input('kelurahan'),
             'latitude' => $request->input('latitude'),
             'longitude' => $request->input('longitude'),
             'kepala_keluarga' => $request->input('kepala_keluarga'),

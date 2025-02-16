@@ -34,22 +34,40 @@
                 </div>
 
                 <div class="row">
+                    <!-- Dropdown Kecamatan -->
                     <div class="col-md-6">
                         <div class="mb-2">
                             <label for="kecamatan" class="form-label">Kecamatan</label>
-                            <input type="text" class="form-control" id="kecamatan" name="kecamatan" value="{{$data->kecamatan}}" required>
+                            <select class="form-control" id="kecamatan" name="kecamatan" required>
+                                <option value="" disabled>Pilih Kecamatan</option>
+                                @foreach ($kecamatanList as $kecamatan)
+                                    <option value="{{ $kecamatan->id }}" 
+                                        {{ $data->id_kecamatan == $kecamatan->id ? 'selected' : '' }}>
+                                        {{ $kecamatan->kecamatan }}
+                                    </option>
+                                @endforeach
+                            </select>
                             <div class="invalid-feedback">
-                                Silahkan masukkan kecamatan!
+                                Silahkan pilih kecamatan!
                             </div>
                         </div>
                     </div>
-
+            
+                    <!-- Dropdown Kelurahan -->
                     <div class="col-md-6">
                         <div class="mb-2">
                             <label for="kelurahan" class="form-label">Kelurahan</label>
-                            <input type="text" class="form-control" id="kelurahan" name="kelurahan" value="{{$data->kelurahan}}" required>
+                            <select class="form-control" id="kelurahan" name="kelurahan" required>
+                                <option value="" disabled>Pilih Kelurahan</option>
+                                @foreach ($kelurahanList as $kelurahan)
+                                    <option value="{{ $kelurahan->id }}" 
+                                        {{ $data->id_kelurahan == $kelurahan->id ? 'selected' : '' }}>
+                                        {{ $kelurahan->kelurahan }}
+                                    </option>
+                                @endforeach
+                            </select>
                             <div class="invalid-feedback">
-                                Silahkan masukkan kelurahan!
+                                Silahkan pilih kelurahan!
                             </div>
                         </div>
                     </div>
@@ -122,4 +140,34 @@
             </form>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#kecamatan').change(function () {
+                var kecamatanId = $(this).val();
+                $('#kelurahan').html('<option value="" selected disabled>Loading...</option>');
+    
+                if (kecamatanId) {
+                    $.ajax({
+                        url: '{{ route("datagis.getKelurahan") }}',
+                        type: 'GET',
+                        data: { kecamatan_id: kecamatanId },
+                        success: function (data) {
+                            $('#kelurahan').html('<option value="" selected disabled>Pilih Kelurahan</option>');
+                            $.each(data, function (key, kelurahan) {
+                                $('#kelurahan').append('<option value="' + kelurahan.id + '">' + kelurahan.kelurahan + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert('Gagal mengambil data, coba lagi!');
+                            $('#kelurahan').html('<option value="" selected disabled>Pilih Kelurahan</option>');
+                        }
+                    });
+                } else {
+                    $('#kelurahan').html('<option value="" selected disabled>Pilih Kelurahan</option>');
+                }
+            });
+        });
+    </script>
+    
 @endsection

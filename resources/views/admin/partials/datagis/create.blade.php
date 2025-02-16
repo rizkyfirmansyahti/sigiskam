@@ -15,7 +15,6 @@
                 </div>
             </div>
         </div>
-
         <div>
             <form action="{{ route('datagis.store') }}" method="POST" class="needs-validation" novalidate>
                 @csrf
@@ -32,28 +31,36 @@
                     <input type="time" class="form-control" id="waktu" name="waktu">
                 </div>
 
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-2">
                             <label for="kecamatan" class="form-label">Kecamatan</label>
-                            <input type="text" class="form-control" id="kecamatan" name="kecamatan" required>
+                            <select class="form-control" id="kecamatan" name="kecamatan" required>
+                                <option value="" selected disabled>Pilih Kecamatan</option>
+                                @foreach ($data as $kecamatan)
+                                    <option value="{{ $kecamatan->id }}">{{ $kecamatan->kecamatan }}</option>
+                                @endforeach
+                            </select>
                             <div class="invalid-feedback">
-                                Silahkan masukkan kecamatan!
+                                Silahkan pilih kecamatan!
                             </div>
                         </div>
                     </div>
-
+                
                     <div class="col-md-6">
                         <div class="mb-2">
                             <label for="kelurahan" class="form-label">Kelurahan</label>
-                            <input type="text" class="form-control" id="kelurahan" name="kelurahan" required>
+                            <select class="form-control" id="kelurahan" name="kelurahan" required>
+                                <option value="" selected disabled>Pilih Kelurahan</option>
+                            </select>
                             <div class="invalid-feedback">
-                                Silahkan masukkan kelurahan!
+                                Silahkan pilih kelurahan!
                             </div>
                         </div>
                     </div>
                 </div>
-
+                
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-2">
@@ -112,4 +119,34 @@
             </form>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#kecamatan').change(function () {
+                var kecamatanId = $(this).val();
+                $('#kelurahan').html('<option value="" selected disabled>Loading...</option>');
+    
+                if (kecamatanId) {
+                    $.ajax({
+                        url: '{{ route("datagis.getKelurahan") }}',
+                        type: 'GET',
+                        data: { kecamatan_id: kecamatanId },
+                        success: function (data) {
+                            $('#kelurahan').html('<option value="" selected disabled>Pilih Kelurahan</option>');
+                            $.each(data, function (key, kelurahan) {
+                                $('#kelurahan').append('<option value="' + kelurahan.id + '">' + kelurahan.kelurahan + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert('Gagal mengambil data, coba lagi!');
+                            $('#kelurahan').html('<option value="" selected disabled>Pilih Kelurahan</option>');
+                        }
+                    });
+                } else {
+                    $('#kelurahan').html('<option value="" selected disabled>Pilih Kelurahan</option>');
+                }
+            });
+        });
+    </script>
+    
 @endsection

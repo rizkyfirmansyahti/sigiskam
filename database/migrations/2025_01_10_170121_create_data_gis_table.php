@@ -17,8 +17,8 @@ class CreateDataGisTable extends Migration
             $table->id();
             $table->date('tanggal');
             $table->time('waktu')->nullable();
-            $table->string('kecamatan');
-            $table->string('kelurahan');
+            $table->string('id_kecamatan');
+            $table->string('id_kelurahan');
             $table->string('latitude');
             $table->string('longitude');
             $table->string('kepala_keluarga')->nullable();

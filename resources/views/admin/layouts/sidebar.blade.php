@@ -21,6 +21,12 @@
                         <span data-key="t-authentication">Data GIS</span>
                     </a>
                 </li>
+                <li>
+                    <a href="/admin/kecamatan" class="{{ Request::is('admin/kecamatan*') ? 'active' : 'not-active' }}">
+                        <i class="mdi mdi-account-outline"></i>
+                        <span data-key="t-authentication">Kec & Kel</span>
+                    </a>
+                </li>
             </ul>
 
         </div>

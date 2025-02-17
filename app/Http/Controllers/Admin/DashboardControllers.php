@@ -13,12 +13,13 @@ class DashboardControllers extends Controller
     {
         // Mengambil data per kecamatan dan tahun
         $data = DataGISModels::select(
-            'kecamatan',
-            DB::raw('YEAR(tanggal) as tahun'),
+            'kecamatan.kecamatan',
+            DB::raw('YEAR(datagis.tanggal) as tahun'),
             DB::raw('COUNT(*) as total')
         )
-            ->groupBy('kecamatan', 'tahun')
-            ->orderBy('kecamatan')
+            ->join('kecamatan', 'datagis.id_kecamatan', '=', 'kecamatan.id')
+            ->groupBy('kecamatan.kecamatan', 'tahun')
+            ->orderBy('kecamatan.kecamatan')
             ->orderBy('tahun')
             ->get();
 
@@ -26,19 +27,16 @@ class DashboardControllers extends Controller
         $result = [];
 
         foreach ($data as $item) {
-            // Jika kecamatan belum ada dalam array hasil, tambahkan kecamatan baru
             if (!isset($result[$item->kecamatan])) {
                 $result[$item->kecamatan] = [];
             }
-
-            // Tambahkan tahun dan totalnya ke dalam kecamatan yang sesuai
             $result[$item->kecamatan][] = [
                 'tahun' => $item->tahun,
                 'total' => $item->total
             ];
         }
 
-        // Ubah hasil menjadi format yang sesuai
+        // Ubah hasil menjadi format JSON yang sesuai
         $formattedData = [];
         foreach ($result as $kecamatan => $years) {
             $formattedData[] = [
@@ -50,9 +48,14 @@ class DashboardControllers extends Controller
         return response()->json($formattedData);
     }
 
+
     function maps()
     {
-        $data = DataGISModels::all();
+        // $data = = DataGISModels::all();
+        $data = DataGISModels::select('datagis.*', 'kecamatan.kecamatan', 'kelurahan.kelurahan')
+            ->join('kecamatan', 'datagis.id_kecamatan', '=', 'kecamatan.id')
+            ->join('kelurahan', 'datagis.id_kelurahan', '=', 'kelurahan.id')
+            ->get();
         return response()->json($data);
     }
 }

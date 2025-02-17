@@ -274,7 +274,11 @@ fetch('/data-bencana')
                         const cell1 = document.createElement('td');
                         const cell2 = document.createElement('td');
                         cell1.textContent = label;
-                        cell2.textContent = value;
+                        if (label === 'Keterangan' && value !== 'N/A') {
+                            cell2.innerHTML =value;
+                        } else {
+                            cell2.textContent = value;
+                        }
                         row.appendChild(cell1);
                         row.appendChild(cell2);
                         modalTableBody.appendChild(row);
